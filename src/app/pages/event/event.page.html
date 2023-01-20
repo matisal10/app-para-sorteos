@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{event?.title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card [ngClass]="{'eventFinished': event?.finalized }">
+    <ion-card-header>
+      <ion-card-title>
+        {{event?.title}}
+      </ion-card-title>
+      <div>
+        <ion-button [fill]="'outline'" (click)="modalDelete()">
+          <ion-icon name="trash-bin-outline"></ion-icon>
+        </ion-button>
+        <ion-button [fill]="'outline'" (click)="modalReRaffle()">
+          <ion-icon name="repeat-outline"></ion-icon>
+        </ion-button>
+        <ion-button [fill]="'outline'" (click)="modalFinished()">
+          <ion-icon name="checkbox-outline"></ion-icon>
+        </ion-button>
+      </div>
+
+    </ion-card-header>
+
+    <ion-list>
+      <ion-item *ngFor="let participant of event?.participants , index as i">
+        <ion-label>
+          {{participant.name}}
+        </ion-label>
+        <ion-label>
+          Regala a:
+          {{participant.show ? participant.gift: '*****'}}
+        </ion-label>
+        <ion-icon (click)="participant.show ?  participant.show= !participant.show : showModal(i) "
+          name='{{participant.show ? "eye-off-outline": "eye-outline"}}'></ion-icon>
+      </ion-item>
+    </ion-list>
+
+  </ion-card>
+
+  <ion-button style="margin-left: 10px;" (click)="back()">
+    Atras
+  </ion-button>
+
+</ion-content>

@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title> Nuevo evento</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>
+        {{eventAct.title === ''? 'Nuevo evento' : eventAct.title}}
+      </ion-card-title>
+      <ion-card-content>
+        <form (ngSubmit)="store()" #fomrEvent="ngForm">
+          <ion-item>
+            <ion-label position="floating">Nombre del evento</ion-label>
+            <ion-input placeholder="Casamiento jose" [(ngModel)]="eventAct.title" name="title"
+              [required]="true"></ion-input>
+          </ion-item>
+
+          <ion-datetime-button datetime="datetime" style="margin-top: 10px; margin-bottom: 10px;"></ion-datetime-button>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime id="datetime" [min]="today" (ionChange)="changeDate($event)"></ion-datetime>
+            </ng-template>
+          </ion-modal>
+
+          <ion-item fill="outline" *ngFor="let participant of eventAct.participants, index as i">
+            <div>
+              <ion-label position="floating">Participante {{i+1}}</ion-label>
+              <ion-input placeholder="Jose" [(ngModel)]="eventAct.participants[i].name"
+                name="{{'participant' + i}}"></ion-input>
+            </div>
+            <ion-button class="trash" shape="round" fill="outline" (click)="deleteParticipant(i)">
+              <ion-icon id="trash" name="trash-bin-outline">
+              </ion-icon>
+            </ion-button>
+          </ion-item>
+
+          <div class="button-add">
+            <ion-button shape="round" (click)="addParticipantSpace()">
+              <ion-icon name="add-outline"></ion-icon>
+            </ion-button>
+          </div>
+
+          <ion-button fill='outline' style="margin-left: 10px;" (click)="back()">
+            Atras
+          </ion-button>
+
+          <ion-button type="submit" [disabled]="fomrEvent.invalid" style="margin-left: 10px;" (click)="store()">
+            Guardar
+          </ion-button>
+
+        </form>
+
+      </ion-card-content>
+
+    </ion-card-header>
+
+  </ion-card>
+
+</ion-content>
